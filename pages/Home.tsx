@@ -2,7 +2,7 @@ import React from 'react';
 import { useSite } from '../context/SiteContext';
 import { Icon } from '../components/Icon';
 import { motion } from 'framer-motion';
-import { ArrowRight, CheckCircle2, ChevronRight } from 'lucide-react';
+import { ArrowRight, CheckCircle2, ChevronRight, ArrowUpRight } from 'lucide-react';
 import { Link } from 'react-router-dom';
 
 const fadeInUp = {
@@ -20,7 +20,7 @@ const staggerContainer = {
 };
 
 export const Home: React.FC = () => {
-  const { content, posts } = useSite();
+  const { content, portfolios } = useSite();
 
   return (
     <div className="flex flex-col gap-24 pb-20">
@@ -160,6 +160,52 @@ export const Home: React.FC = () => {
             </Link>
           </div>
         </div>
+      </section>
+
+      {/* Portfolio Preview Section */}
+      <section className="container mx-auto px-6 pt-12 pb-24">
+        <div className="flex flex-col md:flex-row justify-between items-end mb-12">
+            <div>
+              <h2 className="text-3xl md:text-5xl font-bold mb-4">Selected Works</h2>
+              <p className="text-slate-300">에이픽이 만들어낸 성장의 기록들</p>
+            </div>
+            <Link to="/portfolio" className="hidden md:flex items-center gap-2 text-blue-300 hover:text-white mt-4 md:mt-0">
+              포트폴리오 전체보기 <ArrowRight size={18} />
+            </Link>
+        </div>
+        
+        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {portfolios.slice(0, 3).map((item) => (
+                 <div key={item.id} className="group block"> 
+                    <div className="aspect-video overflow-hidden rounded-xl bg-slate-800 relative mb-4 border border-white/10">
+                        {item.imageUrl ? (
+                           <img src={item.imageUrl} alt={item.title} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
+                        ) : (
+                          <div className="w-full h-full flex items-center justify-center text-slate-600">No Image</div>
+                        )}
+                         <div className="absolute top-4 left-4 bg-[#1F3590]/90 backdrop-blur text-white text-xs font-bold px-3 py-1 rounded-full uppercase">
+                            {item.category}
+                        </div>
+                    </div>
+                    <div className="flex justify-between items-start">
+                        <div>
+                             <h3 className="text-xl font-bold text-white group-hover:text-blue-300 transition-colors">{item.title}</h3>
+                             <p className="text-slate-400 text-sm mt-2 line-clamp-2">{item.description}</p>
+                        </div>
+                         {item.linkUrl && (
+                             <a href={item.linkUrl} target="_blank" rel="noopener noreferrer" className="mt-1 text-slate-500 hover:text-white transition-colors">
+                                 <ArrowUpRight size={20} />
+                             </a>
+                         )}
+                    </div>
+                 </div>
+            ))}
+        </div>
+         <div className="mt-12 text-center md:hidden">
+             <Link to="/portfolio" className="inline-flex items-center gap-2 text-blue-300 hover:text-white">
+              포트폴리오 전체보기 <ArrowRight size={18} />
+            </Link>
+          </div>
       </section>
 
       {/* CTA Section */}

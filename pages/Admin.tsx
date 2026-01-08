@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useSite } from '../context/SiteContext';
-import { LayoutDashboard, FileText, Settings, LogOut, Save, Plus, Trash2, Home, Image } from 'lucide-react';
+import { LayoutDashboard, FileText, Settings, LogOut, Save, Plus, Trash2, Home, Image, Edit2, X } from 'lucide-react';
 import { Link, useNavigate } from 'react-router-dom';
 
 const AdminLogin: React.FC = () => {
@@ -15,7 +15,7 @@ const AdminLogin: React.FC = () => {
       login();
       navigate('/admin/dashboard');
     } else {
-      setError('비밀번호가 올바르지 않습니다. (Hint: admin123)');
+      setError('비밀번호가 올바르지 않습니다.');
     }
   };
 
@@ -48,10 +48,13 @@ const AdminLogin: React.FC = () => {
 };
 
 export const AdminDashboard: React.FC = () => {
-  const { isLoggedIn, logout, content, updateHero, portfolios, addPortfolio, deletePortfolio } = useSite();
+  const { isLoggedIn, logout, content, updateHero, portfolios, addPortfolio, updatePortfolio, deletePortfolio } = useSite();
   const [activeTab, setActiveTab] = useState<'overview' | 'content' | 'portfolio' | 'settings'>('overview');
   const [heroForm, setHeroForm] = useState(content.hero);
-  const [newPortfolio, setNewPortfolio] = useState({ title: '', category: '', linkUrl: '', description: '' });
+  
+  // Portfolio state
+  const [editingId, setEditingId] = useState<string | null>(null);
+  const [portfolioForm, setPortfolioForm] = useState({ title: '', category: '', linkUrl: '', description: '', imageUrl: '' });
 
   if (!isLoggedIn) {
     return <AdminLogin />;
@@ -62,14 +65,43 @@ export const AdminDashboard: React.FC = () => {
     alert('메인 히어로 섹션이 업데이트되었습니다.');
   };
 
-  const handleAddPortfolio = (e: React.FormEvent) => {
+  const handlePortfolioSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    addPortfolio({
-      ...newPortfolio,
-      imageUrl: `https://picsum.photos/800/600?random=${Date.now() + 100}`
-    });
-    setNewPortfolio({ title: '', category: '', linkUrl: '', description: '' });
-    alert('새 포트폴리오가 등록되었습니다.');
+    
+    // Default image if empty
+    const finalImageUrl = portfolioForm.imageUrl.trim() || `https://picsum.photos/800/600?random=${Date.now()}`;
+
+    if (editingId) {
+        updatePortfolio(editingId, { ...portfolioForm, imageUrl: finalImageUrl });
+        alert('포트폴리오가 수정되었습니다.');
+        setEditingId(null);
+    } else {
+        addPortfolio({
+            ...portfolioForm,
+            imageUrl: finalImageUrl
+        });
+        alert('새 포트폴리오가 등록되었습니다.');
+    }
+    
+    // Reset form
+    setPortfolioForm({ title: '', category: '', linkUrl: '', description: '', imageUrl: '' });
+  };
+
+  const startEdit = (item: any) => {
+      setEditingId(item.id);
+      setPortfolioForm({
+          title: item.title,
+          category: item.category,
+          linkUrl: item.linkUrl || '',
+          description: item.description || '',
+          imageUrl: item.imageUrl || ''
+      });
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
+
+  const cancelEdit = () => {
+      setEditingId(null);
+      setPortfolioForm({ title: '', category: '', linkUrl: '', description: '', imageUrl: '' });
   };
 
   return (
@@ -147,7 +179,7 @@ export const AdminDashboard: React.FC = () => {
             <div className="col-span-1 md:col-span-3 bg-[#162666] p-6 rounded-xl border border-blue-900/30 mt-6">
               <h3 className="text-lg font-bold text-white mb-4">빠른 시작</h3>
               <div className="flex gap-4">
-                <button onClick={() => setActiveTab('portfolio')} className="bg-blue-600 px-4 py-2 rounded text-white text-sm hover:bg-blue-500">포트폴리오 추가</button>
+                <button onClick={() => setActiveTab('portfolio')} className="bg-blue-600 px-4 py-2 rounded text-white text-sm hover:bg-blue-500">포트폴리오 관리</button>
               </div>
             </div>
           </div>
@@ -196,15 +228,21 @@ export const AdminDashboard: React.FC = () => {
         {activeTab === 'portfolio' && (
           <div className="space-y-8">
             <div className="bg-[#162666] p-6 rounded-xl border border-blue-900/30">
-              <h3 className="text-lg font-bold text-white mb-4">새 포트폴리오 추가</h3>
-              <form onSubmit={handleAddPortfolio} className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div className="flex justify-between items-center mb-4">
+                 <h3 className="text-lg font-bold text-white">{editingId ? '포트폴리오 수정' : '새 포트폴리오 추가'}</h3>
+                 {editingId && (
+                     <button onClick={cancelEdit} className="text-sm text-slate-400 hover:text-white flex items-center gap-1"><X size={14}/> 취소</button>
+                 )}
+              </div>
+              
+              <form onSubmit={handlePortfolioSubmit} className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div className="md:col-span-2">
                   <input 
                     type="text" 
                     placeholder="프로젝트 제목" 
                     required
-                    value={newPortfolio.title}
-                    onChange={(e) => setNewPortfolio({...newPortfolio, title: e.target.value})}
+                    value={portfolioForm.title}
+                    onChange={(e) => setPortfolioForm({...portfolioForm, title: e.target.value})}
                     className="w-full bg-[#101C4F] border border-blue-900 rounded p-3 text-white focus:border-white outline-none"
                   />
                 </div>
@@ -213,8 +251,8 @@ export const AdminDashboard: React.FC = () => {
                     type="text" 
                     placeholder="카테고리 (예: 촬영, 영상)" 
                     required
-                    value={newPortfolio.category}
-                    onChange={(e) => setNewPortfolio({...newPortfolio, category: e.target.value})}
+                    value={portfolioForm.category}
+                    onChange={(e) => setPortfolioForm({...portfolioForm, category: e.target.value})}
                     className="w-full bg-[#101C4F] border border-blue-900 rounded p-3 text-white focus:border-white outline-none"
                   />
                 </div>
@@ -222,8 +260,18 @@ export const AdminDashboard: React.FC = () => {
                    <input 
                     type="text" 
                     placeholder="노션/외부 링크 URL (선택)" 
-                    value={newPortfolio.linkUrl}
-                    onChange={(e) => setNewPortfolio({...newPortfolio, linkUrl: e.target.value})}
+                    value={portfolioForm.linkUrl}
+                    onChange={(e) => setPortfolioForm({...portfolioForm, linkUrl: e.target.value})}
+                    className="w-full bg-[#101C4F] border border-blue-900 rounded p-3 text-white focus:border-white outline-none"
+                  />
+                </div>
+                <div className="md:col-span-2">
+                   <label className="block text-slate-400 text-xs mb-1">썸네일 이미지 URL (구글 드라이브 링크 등)</label>
+                   <input 
+                    type="text" 
+                    placeholder="https://..." 
+                    value={portfolioForm.imageUrl}
+                    onChange={(e) => setPortfolioForm({...portfolioForm, imageUrl: e.target.value})}
                     className="w-full bg-[#101C4F] border border-blue-900 rounded p-3 text-white focus:border-white outline-none"
                   />
                 </div>
@@ -231,13 +279,13 @@ export const AdminDashboard: React.FC = () => {
                   <textarea 
                     placeholder="프로젝트 설명" 
                     required
-                    value={newPortfolio.description}
-                    onChange={(e) => setNewPortfolio({...newPortfolio, description: e.target.value})}
+                    value={portfolioForm.description}
+                    onChange={(e) => setPortfolioForm({...portfolioForm, description: e.target.value})}
                     className="w-full bg-[#101C4F] border border-blue-900 rounded p-3 text-white h-24 focus:border-white outline-none"
                   />
                 </div>
-                <button type="submit" className="md:col-span-2 flex items-center justify-center gap-2 bg-blue-600 hover:bg-blue-500 text-white px-4 py-3 rounded-lg font-bold">
-                  <Plus size={18} /> 포트폴리오 등록
+                <button type="submit" className={`md:col-span-2 flex items-center justify-center gap-2 ${editingId ? 'bg-green-600 hover:bg-green-500' : 'bg-blue-600 hover:bg-blue-500'} text-white px-4 py-3 rounded-lg font-bold`}>
+                  {editingId ? <><Save size={18} /> 수정사항 저장</> : <><Plus size={18} /> 포트폴리오 등록</>}
                 </button>
               </form>
             </div>
@@ -250,23 +298,31 @@ export const AdminDashboard: React.FC = () => {
                     <tr className="border-b border-blue-900/50 text-slate-400 text-sm">
                       <th className="py-3 px-4">제목</th>
                       <th className="py-3 px-4">카테고리</th>
-                      <th className="py-3 px-4">링크 여부</th>
+                      <th className="py-3 px-4">링크</th>
                       <th className="py-3 px-4 text-right">관리</th>
                     </tr>
                   </thead>
                   <tbody>
                     {portfolios.map(item => (
-                      <tr key={item.id} className="border-b border-blue-900/30 hover:bg-blue-900/20">
+                      <tr key={item.id} className={`border-b border-blue-900/30 hover:bg-blue-900/20 ${editingId === item.id ? 'bg-blue-900/40' : ''}`}>
                         <td className="py-3 px-4 text-white font-medium">{item.title}</td>
                         <td className="py-3 px-4 text-slate-400 text-sm">{item.category}</td>
-                        <td className="py-3 px-4 text-slate-400 text-sm">{item.linkUrl ? '있음' : '-'}</td>
+                        <td className="py-3 px-4 text-slate-400 text-sm truncate max-w-[150px]">{item.linkUrl ? item.linkUrl : '-'}</td>
                         <td className="py-3 px-4 text-right">
-                          <button 
-                            onClick={() => deletePortfolio(item.id)}
-                            className="text-red-400 hover:text-red-300 p-1 rounded hover:bg-red-900/20"
-                          >
-                            <Trash2 size={16} />
-                          </button>
+                          <div className="flex justify-end gap-2">
+                            <button 
+                                onClick={() => startEdit(item)}
+                                className="text-blue-400 hover:text-blue-300 p-1 rounded hover:bg-blue-900/20"
+                            >
+                                <Edit2 size={16} />
+                            </button>
+                            <button 
+                                onClick={() => deletePortfolio(item.id)}
+                                className="text-red-400 hover:text-red-300 p-1 rounded hover:bg-red-900/20"
+                            >
+                                <Trash2 size={16} />
+                            </button>
+                          </div>
                         </td>
                       </tr>
                     ))}
