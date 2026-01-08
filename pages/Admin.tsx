@@ -191,11 +191,10 @@ export const AdminDashboard: React.FC = () => {
             <div className="space-y-6">
               <div>
                 <label className="block text-slate-400 text-sm mb-2">메인 타이틀</label>
-                <input 
-                  type="text" 
+                <textarea 
                   value={heroForm.title}
                   onChange={(e) => setHeroForm({...heroForm, title: e.target.value})}
-                  className="w-full bg-[#101C4F] border border-blue-900 rounded p-3 text-white focus:border-white outline-none"
+                  className="w-full bg-[#101C4F] border border-blue-900 rounded p-3 text-white focus:border-white outline-none h-32"
                 />
               </div>
               <div>

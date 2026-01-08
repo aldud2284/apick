@@ -2,7 +2,7 @@ import { SiteContent, BlogPost, PortfolioItem } from './types';
 
 export const INITIAL_CONTENT: SiteContent = {
   hero: {
-    title: "제대로 보이고, 매력적으로 보이고, 지속적으로 선택받게",
+    title: "제대로 보이고,\n매력적으로 보이고,\n지속적으로 선택받게",
     subtitle: "실행 중심 마케팅 스튜디오, 에이픽입니다.",
     ctaText: "무료 상담 신청하기",
   },

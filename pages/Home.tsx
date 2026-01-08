@@ -43,7 +43,7 @@ export const Home: React.FC = () => {
             <span className="inline-block px-4 py-2 rounded-full bg-white/10 border border-white/20 text-blue-100 font-semibold text-sm tracking-wider uppercase mb-4">
               Execution Focused Marketing Studio
             </span>
-            <h1 className="text-5xl md:text-7xl font-bold leading-tight tracking-tight text-white">
+            <h1 className="text-5xl md:text-7xl font-bold leading-tight tracking-tight text-white whitespace-pre-line">
               {content.hero.title}
             </h1>
             <p className="text-xl md:text-2xl text-blue-100 font-light max-w-2xl mx-auto">
