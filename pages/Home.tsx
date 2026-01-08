@@ -46,7 +46,7 @@ export const Home: React.FC = () => {
             <h1 className="text-5xl md:text-7xl font-bold leading-tight tracking-tight text-white whitespace-pre-line">
               {content.hero.title}
             </h1>
-            <p className="text-xl md:text-2xl text-blue-100 font-light max-w-2xl mx-auto">
+            <p className="text-xl md:text-2xl text-blue-100 font-light max-w-2xl mx-auto whitespace-pre-line">
               {content.hero.subtitle}
             </p>
             <div className="pt-8 flex flex-col sm:flex-row justify-center gap-4">
