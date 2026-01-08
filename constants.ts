@@ -127,7 +127,6 @@ export const SAMPLE_PORTFOLIOS: PortfolioItem[] = [
     title: "촬영 포트폴리오",
     category: "촬영",
     imageUrl: "https://picsum.photos/800/600?random=21",
-    linkUrl: "https://www.notion.so/2c5149ebc592808a8e81f0a2f9d1cefa?pvs=21",
     description: "음식, 공간, 제품 등 에이픽 스튜디오의 전문적인 촬영 결과물입니다."
   },
   {
@@ -135,7 +134,6 @@ export const SAMPLE_PORTFOLIOS: PortfolioItem[] = [
     title: "영상 작업물",
     category: "영상",
     imageUrl: "https://picsum.photos/800/600?random=22",
-    linkUrl: "https://www.notion.so/2c5149ebc59280afab77dd7d32dfe809?pvs=21",
     description: "매장의 매력을 담아내는 숏폼 및 홍보 영상 포트폴리오."
   },
   {
@@ -143,7 +141,6 @@ export const SAMPLE_PORTFOLIOS: PortfolioItem[] = [
     title: "디자인 포트폴리오",
     category: "디자인",
     imageUrl: "https://picsum.photos/800/600?random=23",
-    linkUrl: "https://www.notion.so/2c5149ebc5928071a604f2b0cde05532?pvs=21",
     description: "브랜드의 결을 살리는 맞춤형 디자인 작업물입니다."
   },
   {
@@ -151,7 +148,6 @@ export const SAMPLE_PORTFOLIOS: PortfolioItem[] = [
     title: "브랜딩 & 컨설팅 사례",
     category: "브랜딩",
     imageUrl: "https://picsum.photos/800/600?random=24",
-    linkUrl: "https://www.notion.so/2c5149ebc5928065ac8add73dfe53833?pvs=21",
     description: "로컬 브랜드의 시작과 성장을 함께한 컨설팅 사례들."
   },
   {
@@ -159,7 +155,6 @@ export const SAMPLE_PORTFOLIOS: PortfolioItem[] = [
     title: "AI 이미지 제작",
     category: "AI Art",
     imageUrl: "https://picsum.photos/800/600?random=25",
-    linkUrl: "https://www.notion.so/AI-2c5149ebc59280df8ce1d9ad88a94d6c?pvs=21",
     description: "상상을 현실로 만드는 고퀄리티 AI 이미지 제작 포트폴리오."
   }
 ];
