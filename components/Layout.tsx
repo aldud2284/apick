@@ -50,12 +50,14 @@ export const Layout: React.FC<{ children: React.ReactNode }> = ({ children }) =>
                 <ShieldCheck size={14} /> 관리자
                </Link>
             )}
-            <Link
-              to="/contact"
+            <a
+              href="https://forms.gle/vTtFToLF6NADK5wDA"
+              target="_blank"
+              rel="noopener noreferrer"
               className="bg-white text-[#1F3590] px-5 py-2.5 rounded-full font-bold hover:bg-blue-50 transition-all transform hover:scale-105 flex items-center gap-2"
             >
               문의하기 <ArrowRight size={16} />
-            </Link>
+            </a>
           </div>
 
           <button
@@ -72,7 +74,15 @@ export const Layout: React.FC<{ children: React.ReactNode }> = ({ children }) =>
              <Link to="/" className="text-lg font-medium" onClick={() => setIsMobileMenuOpen(false)}>홈</Link>
             <Link to="/services" className="text-lg font-medium" onClick={() => setIsMobileMenuOpen(false)}>서비스</Link>
             <Link to="/portfolio" className="text-lg font-medium" onClick={() => setIsMobileMenuOpen(false)}>포트폴리오</Link>
-            <Link to="/contact" className="text-lg font-medium text-blue-200" onClick={() => setIsMobileMenuOpen(false)}>문의하기</Link>
+            <a 
+              href="https://forms.gle/vTtFToLF6NADK5wDA" 
+              target="_blank" 
+              rel="noopener noreferrer"
+              className="text-lg font-medium text-blue-200" 
+              onClick={() => setIsMobileMenuOpen(false)}
+            >
+              문의하기
+            </a>
             {isLoggedIn && (
                <Link to="/admin" className="text-lg font-medium text-purple-300" onClick={() => setIsMobileMenuOpen(false)}>관리자 대시보드</Link>
             )}

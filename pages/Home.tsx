@@ -50,9 +50,14 @@ export const Home: React.FC = () => {
               {content.hero.subtitle}
             </p>
             <div className="pt-8 flex flex-col sm:flex-row justify-center gap-4">
-               <Link to="/contact" className="bg-white hover:bg-blue-50 text-[#1F3590] px-8 py-4 rounded-full font-bold text-lg transition-all transform hover:scale-105 shadow-xl shadow-blue-900/50 flex items-center justify-center gap-2">
+               <a 
+                 href="https://forms.gle/vTtFToLF6NADK5wDA"
+                 target="_blank"
+                 rel="noopener noreferrer"
+                 className="bg-white hover:bg-blue-50 text-[#1F3590] px-8 py-4 rounded-full font-bold text-lg transition-all transform hover:scale-105 shadow-xl shadow-blue-900/50 flex items-center justify-center gap-2"
+               >
                 {content.hero.ctaText} <ArrowRight />
-              </Link>
+              </a>
               <Link to="/services" className="bg-transparent border border-white/30 hover:bg-white/10 text-white px-8 py-4 rounded-full font-medium text-lg transition-all flex items-center justify-center">
                 서비스 더보기
               </Link>
@@ -166,12 +171,14 @@ export const Home: React.FC = () => {
             <p className="text-blue-100 text-lg mb-10 max-w-2xl mx-auto">
               초기 컨설팅은 무료로 진행됩니다. 현재의 문제점과 개선 방향을 제안해 드립니다.
             </p>
-            <Link 
-              to="/contact"
+            <a 
+              href="https://forms.gle/vTtFToLF6NADK5wDA"
+              target="_blank"
+              rel="noopener noreferrer"
               className="inline-block bg-white text-[#1F3590] px-10 py-4 rounded-full font-bold text-lg hover:bg-blue-50 transition-colors shadow-2xl"
             >
               무료 진단 신청하기
-            </Link>
+            </a>
           </div>
         </div>
       </section>
