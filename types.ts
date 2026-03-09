@@ -21,6 +21,10 @@ export interface SiteContent {
     subtitle: string;
     ctaText: string;
   };
+  problem: {
+    title: string;
+    description: string;
+  };
   principles: PrincipleItem[];
   services: ServiceItem[];
   contact: {
