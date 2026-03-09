@@ -48,9 +48,14 @@ const AdminLogin: React.FC = () => {
 };
 
 export const AdminDashboard: React.FC = () => {
-  const { isLoggedIn, logout, content, updateHero, portfolios, addPortfolio, updatePortfolio, deletePortfolio } = useSite();
+  const { isLoggedIn, logout, content, updateHero, updateProblem, updateMockup, portfolios, addPortfolio, updatePortfolio, deletePortfolio } = useSite();
   const [activeTab, setActiveTab] = useState<'overview' | 'content' | 'portfolio' | 'settings'>('overview');
   const [heroForm, setHeroForm] = useState(content.hero);
+  const [problemForm, setProblemForm] = useState(content.problem);
+  const [mockupForm, setMockupForm] = useState(content.mockup || { 
+    beforeImage: '', mainImage: '', subImage1: '', subImage2: '',
+    beforeText: '', afterText: '', mockupTitle: '', mockupSubtitle: ''
+  });
   
   // Portfolio state
   const [editingId, setEditingId] = useState<string | null>(null);
@@ -63,6 +68,16 @@ export const AdminDashboard: React.FC = () => {
   const handleSaveHero = () => {
     updateHero(heroForm);
     alert('메인 히어로 섹션이 업데이트되었습니다.');
+  };
+
+  const handleSaveProblem = () => {
+    updateProblem(problemForm);
+    alert('문제 제기 섹션이 업데이트되었습니다.');
+  };
+
+  const handleSaveMockup = () => {
+    updateMockup(mockupForm);
+    alert('목업 섹션이 업데이트되었습니다.');
   };
 
   const handlePortfolioSubmit = (e: React.FormEvent) => {
@@ -186,40 +201,167 @@ export const AdminDashboard: React.FC = () => {
         )}
 
         {activeTab === 'content' && (
-          <div className="bg-[#151515] p-8 rounded-xl border border-white/5 max-w-2xl">
-            <h3 className="text-lg font-bold text-white mb-6">히어로 섹션 텍스트</h3>
-            <div className="space-y-6">
-              <div>
-                <label className="block text-gray-400 text-sm mb-2">메인 타이틀</label>
-                <textarea 
-                  value={heroForm.title}
-                  onChange={(e) => setHeroForm({...heroForm, title: e.target.value})}
-                  className="w-full bg-[#222] border border-white/10 rounded p-3 text-white focus:border-brand outline-none h-32"
-                />
+          <div className="space-y-8">
+            <div className="bg-[#151515] p-8 rounded-xl border border-white/5 max-w-2xl">
+              <h3 className="text-lg font-bold text-white mb-6">히어로 섹션 텍스트</h3>
+              <div className="space-y-6">
+                <div>
+                  <label className="block text-gray-400 text-sm mb-2">메인 타이틀</label>
+                  <textarea 
+                    value={heroForm.title}
+                    onChange={(e) => setHeroForm({...heroForm, title: e.target.value})}
+                    className="w-full bg-[#222] border border-white/10 rounded p-3 text-white focus:border-brand outline-none h-32"
+                  />
+                </div>
+                <div>
+                  <label className="block text-gray-400 text-sm mb-2">서브 타이틀</label>
+                  <textarea 
+                    value={heroForm.subtitle}
+                    onChange={(e) => setHeroForm({...heroForm, subtitle: e.target.value})}
+                    className="w-full bg-[#222] border border-white/10 rounded p-3 text-white focus:border-brand outline-none h-24"
+                  />
+                </div>
+                <div>
+                  <label className="block text-gray-400 text-sm mb-2">버튼 텍스트</label>
+                  <input 
+                    type="text" 
+                    value={heroForm.ctaText}
+                    onChange={(e) => setHeroForm({...heroForm, ctaText: e.target.value})}
+                    className="w-full bg-[#222] border border-white/10 rounded p-3 text-white focus:border-brand outline-none"
+                  />
+                </div>
+                <div>
+                  <label className="block text-gray-400 text-sm mb-2">배경 이미지 URL</label>
+                  <input 
+                    type="text" 
+                    value={heroForm.backgroundImage || ''}
+                    onChange={(e) => setHeroForm({...heroForm, backgroundImage: e.target.value})}
+                    className="w-full bg-[#222] border border-white/10 rounded p-3 text-white focus:border-brand outline-none"
+                  />
+                </div>
+                <button 
+                  onClick={handleSaveHero}
+                  className="flex items-center gap-2 bg-brand text-white hover:bg-brand/90 px-6 py-3 rounded-lg font-bold transition-colors"
+                >
+                  <Save size={18} /> 변경사항 저장
+                </button>
               </div>
-              <div>
-                <label className="block text-gray-400 text-sm mb-2">서브 타이틀</label>
-                <textarea 
-                  value={heroForm.subtitle}
-                  onChange={(e) => setHeroForm({...heroForm, subtitle: e.target.value})}
-                  className="w-full bg-[#222] border border-white/10 rounded p-3 text-white focus:border-brand outline-none h-24"
-                />
+            </div>
+
+            <div className="bg-[#151515] p-8 rounded-xl border border-white/5 max-w-2xl">
+              <h3 className="text-lg font-bold text-white mb-6">문제 제기 섹션 텍스트</h3>
+              <div className="space-y-6">
+                <div>
+                  <label className="block text-gray-400 text-sm mb-2">타이틀</label>
+                  <textarea 
+                    value={problemForm.title}
+                    onChange={(e) => setProblemForm({...problemForm, title: e.target.value})}
+                    className="w-full bg-[#222] border border-white/10 rounded p-3 text-white focus:border-brand outline-none h-24"
+                  />
+                </div>
+                <div>
+                  <label className="block text-gray-400 text-sm mb-2">상세 설명</label>
+                  <textarea 
+                    value={problemForm.description}
+                    onChange={(e) => setProblemForm({...problemForm, description: e.target.value})}
+                    className="w-full bg-[#222] border border-white/10 rounded p-3 text-white focus:border-brand outline-none h-48"
+                  />
+                </div>
+                <button 
+                  onClick={handleSaveProblem}
+                  className="flex items-center gap-2 bg-brand text-white hover:bg-brand/90 px-6 py-3 rounded-lg font-bold transition-colors"
+                >
+                  <Save size={18} /> 변경사항 저장
+                </button>
               </div>
-              <div>
-                <label className="block text-gray-400 text-sm mb-2">버튼 텍스트</label>
-                <input 
-                  type="text" 
-                  value={heroForm.ctaText}
-                  onChange={(e) => setHeroForm({...heroForm, ctaText: e.target.value})}
-                  className="w-full bg-[#222] border border-white/10 rounded p-3 text-white focus:border-brand outline-none"
-                />
+            </div>
+
+            <div className="bg-[#151515] p-8 rounded-xl border border-white/5 max-w-2xl">
+              <h3 className="text-lg font-bold text-white mb-6">목업(Mockup) 섹션 콘텐츠</h3>
+              <div className="space-y-6">
+                <div className="grid grid-cols-2 gap-4">
+                  <div>
+                    <label className="block text-gray-400 text-sm mb-2">왼쪽 상단 텍스트</label>
+                    <input 
+                      type="text" 
+                      value={mockupForm.beforeText || ''}
+                      onChange={(e) => setMockupForm({...mockupForm, beforeText: e.target.value})}
+                      className="w-full bg-[#222] border border-white/10 rounded p-3 text-white focus:border-brand outline-none"
+                    />
+                  </div>
+                  <div>
+                    <label className="block text-gray-400 text-sm mb-2">오른쪽 상단 텍스트</label>
+                    <input 
+                      type="text" 
+                      value={mockupForm.afterText || ''}
+                      onChange={(e) => setMockupForm({...mockupForm, afterText: e.target.value})}
+                      className="w-full bg-[#222] border border-white/10 rounded p-3 text-white focus:border-brand outline-none"
+                    />
+                  </div>
+                </div>
+                <div>
+                  <label className="block text-gray-400 text-sm mb-2">목업 타이틀</label>
+                  <input 
+                    type="text" 
+                    value={mockupForm.mockupTitle || ''}
+                    onChange={(e) => setMockupForm({...mockupForm, mockupTitle: e.target.value})}
+                    className="w-full bg-[#222] border border-white/10 rounded p-3 text-white focus:border-brand outline-none"
+                  />
+                </div>
+                <div>
+                  <label className="block text-gray-400 text-sm mb-2">목업 서브타이틀</label>
+                  <input 
+                    type="text" 
+                    value={mockupForm.mockupSubtitle || ''}
+                    onChange={(e) => setMockupForm({...mockupForm, mockupSubtitle: e.target.value})}
+                    className="w-full bg-[#222] border border-white/10 rounded p-3 text-white focus:border-brand outline-none"
+                  />
+                </div>
+                <hr className="border-white/10 my-4" />
+                <div>
+                  <label className="block text-gray-400 text-sm mb-2">과거의 전단지 이미지 URL</label>
+                  <input 
+                    type="text" 
+                    value={mockupForm.beforeImage || ''}
+                    onChange={(e) => setMockupForm({...mockupForm, beforeImage: e.target.value})}
+                    className="w-full bg-[#222] border border-white/10 rounded p-3 text-white focus:border-brand outline-none"
+                    placeholder="입력하지 않으면 기본 도형이 표시됩니다."
+                  />
+                </div>
+                <div>
+                  <label className="block text-gray-400 text-sm mb-2">현재의 쇼룸 메인 이미지 URL</label>
+                  <input 
+                    type="text" 
+                    value={mockupForm.mainImage || ''}
+                    onChange={(e) => setMockupForm({...mockupForm, mainImage: e.target.value})}
+                    className="w-full bg-[#222] border border-white/10 rounded p-3 text-white focus:border-brand outline-none"
+                  />
+                </div>
+                <div>
+                  <label className="block text-gray-400 text-sm mb-2">현재의 쇼룸 서브 이미지 1 URL</label>
+                  <input 
+                    type="text" 
+                    value={mockupForm.subImage1 || ''}
+                    onChange={(e) => setMockupForm({...mockupForm, subImage1: e.target.value})}
+                    className="w-full bg-[#222] border border-white/10 rounded p-3 text-white focus:border-brand outline-none"
+                  />
+                </div>
+                <div>
+                  <label className="block text-gray-400 text-sm mb-2">현재의 쇼룸 서브 이미지 2 URL</label>
+                  <input 
+                    type="text" 
+                    value={mockupForm.subImage2 || ''}
+                    onChange={(e) => setMockupForm({...mockupForm, subImage2: e.target.value})}
+                    className="w-full bg-[#222] border border-white/10 rounded p-3 text-white focus:border-brand outline-none"
+                  />
+                </div>
+                <button 
+                  onClick={handleSaveMockup}
+                  className="flex items-center gap-2 bg-brand text-white hover:bg-brand/90 px-6 py-3 rounded-lg font-bold transition-colors"
+                >
+                  <Save size={18} /> 변경사항 저장
+                </button>
               </div>
-              <button 
-                onClick={handleSaveHero}
-                className="flex items-center gap-2 bg-brand text-white hover:bg-brand/90 px-6 py-3 rounded-lg font-bold transition-colors"
-              >
-                <Save size={18} /> 변경사항 저장
-              </button>
             </div>
           </div>
         )}
@@ -304,13 +446,13 @@ export const AdminDashboard: React.FC = () => {
                   <tbody>
                     {portfolios.map(item => (
                       <tr key={item.id} className={`border-b border-white/5 hover:bg-white/5 transition-colors ${editingId === item.id ? 'bg-white/10' : ''}`}>
-                        <td className="py-4 px-4 text-white font-medium">{item.title}</td>
-                        <td className="py-4 px-4">
+                        <td className="py-4 px-4 text-white font-medium align-middle">{item.title}</td>
+                        <td className="py-4 px-4 align-middle">
                           <span className="bg-white/10 text-gray-300 px-2.5 py-1 rounded-full text-xs font-medium">
                             {item.category}
                           </span>
                         </td>
-                        <td className="py-4 px-4 text-center">
+                        <td className="py-4 px-4 text-center align-middle">
                           {item.linkUrl ? (
                             <span className="inline-flex items-center gap-1 bg-brand/10 text-brand px-2.5 py-1 rounded-full text-xs font-medium">
                               <ExternalLink size={12} /> 있음
@@ -321,7 +463,7 @@ export const AdminDashboard: React.FC = () => {
                             </span>
                           )}
                         </td>
-                        <td className="py-4 px-4 text-right">
+                        <td className="py-4 px-4 text-right align-middle">
                           <div className="flex justify-end gap-2">
                             <button 
                                 onClick={() => startEdit(item)}

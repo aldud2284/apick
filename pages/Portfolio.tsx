@@ -9,8 +9,8 @@ export const PortfolioPage: React.FC = () => {
   return (
     <div className="container mx-auto px-6 py-20">
       <div className="text-center max-w-3xl mx-auto mb-20">
-        <h1 className="text-4xl md:text-6xl font-bold mb-6 text-white">Portfolio</h1>
-        <p className="text-gray-400 text-lg">
+        <h1 className="text-4xl md:text-6xl font-bold mb-6 text-white break-keep">Portfolio</h1>
+        <p className="text-gray-400 text-lg break-keep">
           에이픽마케팅이 만들어낸 실제 성공 사례와 작업물들을 확인하세요.
         </p>
       </div>
@@ -42,10 +42,10 @@ export const PortfolioPage: React.FC = () => {
 
             {/* Content */}
             <div className="p-6">
-              <h3 className="text-xl font-bold mb-3 text-white group-hover:text-brand transition-colors line-clamp-2">
+              <h3 className="text-xl font-bold mb-3 text-white group-hover:text-brand transition-colors line-clamp-2 break-keep">
                 {item.title}
               </h3>
-              <p className="text-gray-400 text-sm line-clamp-3 mb-6">
+              <p className="text-gray-400 text-sm line-clamp-3 mb-6 break-keep">
                 {item.description}
               </p>
               

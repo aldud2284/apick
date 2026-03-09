@@ -8,6 +8,8 @@ interface SiteContextType {
   portfolios: PortfolioItem[];
   updateContent: (newContent: Partial<SiteContent>) => void;
   updateHero: (hero: SiteContent['hero']) => void;
+  updateProblem: (problem: SiteContent['problem']) => void;
+  updateMockup: (mockup: SiteContent['mockup']) => void;
   addPost: (post: Omit<BlogPost, 'id'>) => void;
   deletePost: (id: string) => void;
   addPortfolio: (portfolio: Omit<PortfolioItem, 'id'>) => void;
@@ -32,6 +34,14 @@ export const SiteProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
 
   const updateHero = (hero: SiteContent['hero']) => {
     setContent(prev => ({ ...prev, hero }));
+  };
+
+  const updateProblem = (problem: SiteContent['problem']) => {
+    setContent(prev => ({ ...prev, problem }));
+  };
+
+  const updateMockup = (mockup: SiteContent['mockup']) => {
+    setContent(prev => ({ ...prev, mockup }));
   };
 
   const addPost = (post: Omit<BlogPost, 'id'>) => {
@@ -66,7 +76,7 @@ export const SiteProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
   const logout = () => setIsLoggedIn(false);
 
   return (
-    <SiteContext.Provider value={{ content, posts, portfolios, updateContent, updateHero, addPost, deletePost, addPortfolio, updatePortfolio, deletePortfolio, isLoggedIn, login, logout }}>
+    <SiteContext.Provider value={{ content, posts, portfolios, updateContent, updateHero, updateProblem, updateMockup, addPost, deletePost, addPortfolio, updatePortfolio, deletePortfolio, isLoggedIn, login, logout }}>
       {children}
     </SiteContext.Provider>
   );

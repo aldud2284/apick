@@ -5,10 +5,21 @@ export const INITIAL_CONTENT: SiteContent = {
     title: "광고하지 마세요,\n맛을 보여주세요",
     subtitle: "온라인 전단지를 고객의 마음을 움직이는 쇼룸으로.\n에이픽은 제대로 보이고, 매력적으로 보여,\n끝내 선택받는 과정을 설계합니다.",
     ctaText: "내 매장 플레이스 진단받기",
+    backgroundImage: "https://images.unsplash.com/photo-1555939594-58d7cb561ad1?q=80&w=2000&auto=format&fit=crop",
   },
   problem: {
-    title: "체험단도 부르고 마케팅을 하는데\n매출은 제자리인가요?",
-    description: "마케팅에 수백만 원을 쓰시면서 정작 고객이 가장 먼저 보는 첫 화면이 무엇으로 되어있나요?\n\n고객은 직접 먹어보기 전까지 맛을 모릅니다.\n오늘 하루도 사장님의 손님을 경쟁 업체에 뺏기고 있습니다.",
+    title: "체험단도 부르고\n마케팅을 하는데\n매출은 제자리인가요?",
+    description: "마케팅에 수백만 원을 쓰시면서\n정작 고객이 가장 먼저 보는 첫 화면이 무엇으로 되어있나요?\n\n고객은 직접 먹어보기 전까지 맛을 모릅니다.\n오늘 하루도 사장님의 손님을 경쟁 업체에 뺏기고 있습니다.",
+  },
+  mockup: {
+    beforeImage: "",
+    mainImage: "https://images.unsplash.com/photo-1504674900247-0877df9cc836?q=80&w=800&auto=format&fit=crop",
+    subImage1: "https://images.unsplash.com/photo-1544025162-d76694265947?q=80&w=400&auto=format&fit=crop",
+    subImage2: "https://images.unsplash.com/photo-1555939594-58d7cb561ad1?q=80&w=400&auto=format&fit=crop",
+    beforeText: "과거의 전단지",
+    afterText: "현재의 쇼룸",
+    mockupTitle: "프리미엄 다이닝",
+    mockupSubtitle: "입맛이 확 도는 육즙 가득한 스테이크",
   },
   contact: {
     email: "apick2@naver.com",

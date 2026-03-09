@@ -29,7 +29,7 @@ export const Home: React.FC = () => {
       <section className="relative h-screen flex items-center justify-center overflow-hidden">
         <div className="absolute inset-0 z-0">
           <img 
-            src="https://images.unsplash.com/photo-1555939594-58d7cb561ad1?q=80&w=2000&auto=format&fit=crop" 
+            src={content.hero.backgroundImage || "https://images.unsplash.com/photo-1555939594-58d7cb561ad1?q=80&w=2000&auto=format&fit=crop"} 
             alt="Delicious food sizzle cut" 
             className="w-full h-full object-cover opacity-40"
             referrerPolicy="no-referrer"
@@ -44,10 +44,10 @@ export const Home: React.FC = () => {
             transition={{ duration: 1, ease: "easeOut" }}
             className="max-w-5xl mx-auto space-y-8"
           >
-            <h1 className="text-5xl md:text-7xl lg:text-8xl font-bold leading-tight tracking-tighter text-white whitespace-pre-line drop-shadow-2xl">
+            <h1 className="text-5xl md:text-7xl lg:text-8xl font-bold leading-tight tracking-tighter text-white whitespace-pre-line drop-shadow-2xl break-keep">
               {content.hero.title}
             </h1>
-            <p className="text-xl md:text-2xl text-gray-300 font-light max-w-3xl mx-auto whitespace-pre-line leading-relaxed">
+            <p className="text-xl md:text-2xl text-gray-300 font-light max-w-3xl mx-auto whitespace-pre-line leading-relaxed break-keep">
               {content.hero.subtitle}
             </p>
             <div className="pt-12 flex flex-col sm:flex-row justify-center gap-6">
@@ -85,11 +85,11 @@ export const Home: React.FC = () => {
             whileInView="whileInView"
             className="max-w-4xl mx-auto text-center"
           >
-            <h2 className="text-4xl md:text-6xl font-bold mb-10 leading-tight text-white whitespace-pre-line">
+            <h2 className="text-4xl md:text-6xl font-bold mb-10 leading-tight text-white whitespace-pre-line break-keep">
               {content.problem?.title}
             </h2>
             <div className="w-24 h-1 bg-brand mx-auto mb-10"></div>
-            <p className="text-xl md:text-2xl text-gray-400 leading-relaxed whitespace-pre-line font-light">
+            <p className="text-xl md:text-2xl text-gray-400 leading-relaxed whitespace-pre-line font-light break-keep">
               {content.problem?.description}
             </p>
           </motion.div>
@@ -127,11 +127,11 @@ export const Home: React.FC = () => {
                 <div className="text-brand mb-8">
                   <Icon name={service.iconName} size={48} strokeWidth={1.5} />
                 </div>
-                <h3 className="text-2xl font-bold mb-6 text-white flex items-center gap-4">
+                <h3 className="text-2xl font-bold mb-6 text-white flex items-center gap-4 break-keep">
                   <span className="text-gray-600 font-mono text-lg">0{idx + 1}</span>
                   {service.title}
                 </h3>
-                <p className="text-gray-400 text-lg leading-relaxed mb-8">
+                <p className="text-gray-400 text-lg leading-relaxed mb-8 break-keep">
                   {service.description}
                 </p>
                 <ul className="space-y-3">
@@ -176,28 +176,32 @@ export const Home: React.FC = () => {
               {/* Mockup Comparison */}
               <div className="flex gap-4 md:gap-8 justify-center">
                 <div className="w-1/2 max-w-[280px] relative">
-                  <div className="absolute -top-10 left-0 right-0 text-center text-gray-500 font-medium">과거의 전단지</div>
+                  <div className="absolute -top-10 left-0 right-0 text-center text-gray-500 font-medium">{content.mockup?.beforeText || "과거의 전단지"}</div>
                   <div className="aspect-[9/19] bg-[#1a1a1a] rounded-[2rem] border-8 border-[#222] overflow-hidden relative shadow-2xl opacity-60 grayscale">
-                    <div className="p-4 flex flex-col gap-3 h-full">
-                      <div className="w-full h-32 bg-[#333] rounded-lg"></div>
-                      <div className="w-3/4 h-4 bg-[#333] rounded"></div>
-                      <div className="w-1/2 h-4 bg-[#333] rounded"></div>
-                      <div className="w-full h-20 bg-[#333] rounded-lg mt-4"></div>
-                      <div className="w-full h-20 bg-[#333] rounded-lg"></div>
-                    </div>
+                    {content.mockup?.beforeImage ? (
+                      <img src={content.mockup.beforeImage} alt="과거의 전단지" className="w-full h-full object-cover" referrerPolicy="no-referrer" />
+                    ) : (
+                      <div className="p-4 flex flex-col gap-3 h-full">
+                        <div className="w-full h-32 bg-[#333] rounded-lg"></div>
+                        <div className="w-3/4 h-4 bg-[#333] rounded"></div>
+                        <div className="w-1/2 h-4 bg-[#333] rounded"></div>
+                        <div className="w-full h-20 bg-[#333] rounded-lg mt-4"></div>
+                        <div className="w-full h-20 bg-[#333] rounded-lg"></div>
+                      </div>
+                    )}
                   </div>
                 </div>
                 
                 <div className="w-1/2 max-w-[280px] relative">
-                  <div className="absolute -top-10 left-0 right-0 text-center text-brand font-bold">현재의 쇼룸</div>
+                  <div className="absolute -top-10 left-0 right-0 text-center text-brand font-bold">{content.mockup?.afterText || "현재의 쇼룸"}</div>
                   <div className="aspect-[9/19] bg-white rounded-[2rem] border-8 border-[#222] overflow-hidden relative shadow-[0_0_50px_rgba(255,94,0,0.2)]">
-                    <img src="https://images.unsplash.com/photo-1504674900247-0877df9cc836?q=80&w=800&auto=format&fit=crop" alt="App Mockup" className="w-full h-48 object-cover" referrerPolicy="no-referrer" />
+                    <img src={content.mockup?.mainImage || "https://images.unsplash.com/photo-1504674900247-0877df9cc836?q=80&w=800&auto=format&fit=crop"} alt="App Mockup" className="w-full h-48 object-cover" referrerPolicy="no-referrer" />
                     <div className="p-4">
-                      <h4 className="text-black font-bold text-lg mb-1">프리미엄 다이닝</h4>
-                      <p className="text-gray-500 text-xs mb-4">입맛이 확 도는 육즙 가득한 스테이크</p>
+                      <h4 className="text-black font-bold text-lg mb-1">{content.mockup?.mockupTitle || "프리미엄 다이닝"}</h4>
+                      <p className="text-gray-500 text-xs mb-4">{content.mockup?.mockupSubtitle || "입맛이 확 도는 육즙 가득한 스테이크"}</p>
                       <div className="grid grid-cols-2 gap-2">
-                        <img src="https://images.unsplash.com/photo-1544025162-d76694265947?q=80&w=400&auto=format&fit=crop" alt="Food" className="w-full h-20 object-cover rounded-lg" referrerPolicy="no-referrer" />
-                        <img src="https://images.unsplash.com/photo-1555939594-58d7cb561ad1?q=80&w=400&auto=format&fit=crop" alt="Food" className="w-full h-20 object-cover rounded-lg" referrerPolicy="no-referrer" />
+                        <img src={content.mockup?.subImage1 || "https://images.unsplash.com/photo-1544025162-d76694265947?q=80&w=400&auto=format&fit=crop"} alt="Food" className="w-full h-20 object-cover rounded-lg" referrerPolicy="no-referrer" />
+                        <img src={content.mockup?.subImage2 || "https://images.unsplash.com/photo-1555939594-58d7cb561ad1?q=80&w=400&auto=format&fit=crop"} alt="Food" className="w-full h-20 object-cover rounded-lg" referrerPolicy="no-referrer" />
                       </div>
                     </div>
                   </div>
@@ -263,8 +267,8 @@ export const Home: React.FC = () => {
                 <div className="text-brand mb-6 font-mono text-sm tracking-widest uppercase">
                   {principle.subtitle}
                 </div>
-                <h3 className="text-3xl font-bold mb-6 text-white">{principle.title}</h3>
-                <p className="text-gray-400 text-lg leading-relaxed">
+                <h3 className="text-3xl font-bold mb-6 text-white break-keep">{principle.title}</h3>
+                <p className="text-gray-400 text-lg leading-relaxed break-keep">
                   {principle.description}
                 </p>
               </motion.div>
@@ -285,13 +289,13 @@ export const Home: React.FC = () => {
             whileInView="whileInView"
             className="max-w-4xl mx-auto"
           >
-            <h2 className="text-4xl md:text-6xl font-bold mb-8 text-white leading-tight">
+            <h2 className="text-4xl md:text-6xl font-bold mb-8 text-white leading-tight break-keep">
               복잡한 마케팅 고민은<br/>
               에이픽에 맡기시고,<br/>
               사장님은 주방에서<br/>
               맛과 서비스에만 집중하세요.
             </h2>
-            <p className="text-xl text-white/80 mb-12">
+            <p className="text-xl text-white/80 mb-12 break-keep">
               초기 상담은 무료입니다. 현재 문제점과 개선 방향을 함께 진단해 드립니다.
             </p>
             <a 

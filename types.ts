@@ -20,10 +20,21 @@ export interface SiteContent {
     title: string;
     subtitle: string;
     ctaText: string;
+    backgroundImage?: string;
   };
   problem: {
     title: string;
     description: string;
+  };
+  mockup: {
+    beforeImage?: string;
+    mainImage?: string;
+    subImage1?: string;
+    subImage2?: string;
+    beforeText?: string;
+    afterText?: string;
+    mockupTitle?: string;
+    mockupSubtitle?: string;
   };
   principles: PrincipleItem[];
   services: ServiceItem[];

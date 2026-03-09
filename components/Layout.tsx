@@ -132,9 +132,11 @@ export const Layout: React.FC<{ children: React.ReactNode }> = ({ children }) =>
             <div>
               <h4 className="text-white font-bold mb-6">Service</h4>
               <ul className="space-y-4 text-gray-400 text-sm">
-                <li>시각적 시식 (사진/영상/AI)</li>
-                <li>지식의 저주 탈출 (카피/디자인)</li>
-                <li>찐 단골 팬덤 구축 (브랜딩/컨설팅)</li>
+                {content.services.map((service) => (
+                  <li key={service.id}>
+                    {service.title} ({service.details.join('/')})
+                  </li>
+                ))}
               </ul>
             </div>
           </div>
